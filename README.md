@@ -53,7 +53,7 @@
 </details>
 
 <details>
-<summary><b>HomeWork</b></summary>
+<summary><b>HomeWork:</b></summary>
 
 - **Task001**:
 
