@@ -11,9 +11,9 @@ def input_int():
 def find_quarter(num_quarter):
 
     return "x > 0, y > 0" if num_quarter == 1 else \
-            "x > 0, y > 0" if num_quarter == 2 else \
-            "x > 0, y > 0" if num_quarter == 3 else \
-            "x > 0, y > 0" if num_quarter == 4 else \
+            "x < 0, y > 0" if num_quarter == 2 else \
+            "x < 0, y < 0" if num_quarter == 3 else \
+            "x > 0, y < 0" if num_quarter == 4 else \
             "Ошибка"
 
 

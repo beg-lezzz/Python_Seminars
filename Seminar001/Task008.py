@@ -9,14 +9,14 @@ def input_int(order):
 
 # метод для определения положения точки по четвертям координатной плоскости
 def find_quarter(x, y):
-    return "1 четверть" if x > 0 & y > 0 else \
-        "2 четверть" if x < 0 & y > 0 else \
-        "3 четверть" if x < 0 & y < 0 else \
-        "4 четверть" if x > 0 & y < 0 else \
-        "На оси X больше нуля" if x > 0 & y == 0 else \
-        "На оси X меньше нуля" if x < 0 & y == 0 else \
-        "На оси Y больше нуля" if x == 0 & y > 0 else \
-        "На оси Y меньше нуля" if x == 0 & y < 0 else \
+    return "1 четверть" if x > 0 and y > 0 else \
+        "2 четверть" if x < 0 and y > 0 else \
+        "3 четверть" if x < 0 and y < 0 else \
+        "4 четверть" if x > 0 and y < 0 else \
+        "На оси X больше нуля" if x > 0 and y == 0 else \
+        "На оси X меньше нуля" if x < 0 and y == 0 else \
+        "На оси Y больше нуля" if x == 0 and y > 0 else \
+        "На оси Y меньше нуля" if x == 0 and y < 0 else \
         "На пересечении осей"
 
 
