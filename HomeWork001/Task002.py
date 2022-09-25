@@ -1,4 +1,4 @@
-# метод для запроса у пользователя целых чисел с проверкой на целочисленность
+# метод для запроса у пользователя целых чисел с проверкой на целочисленность и ввод только 0 и 1
 def input_int(order):
     try:
         num = int(input(f"Введите {order}-е значение: "))
@@ -24,5 +24,5 @@ def check_condition(list):
         print('Утверждение ложно')
 
 
-digits_amount = 3
+digits_amount = 3   # x, y, z
 check_condition(list_insert(digits_amount))
