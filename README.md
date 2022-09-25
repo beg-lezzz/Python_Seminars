@@ -1,11 +1,10 @@
 ﻿# В репозитории содержатся решения задач в рамках курса "Основы Python"
 
 <details>
-<summary><b>Seminar001</b></summary>
+<summary><b>Seminar001</b></summary><br>
 
-<br>
 <details>
-<summary><b>Tasks:</b></summary>
+<summary><b>Tasks</b></summary><br>
 
 - **Task001**:
 
@@ -54,7 +53,7 @@
 </details>
 
 <details>
-<summary><b>HomeWork:</b></summary>
+<summary><b>HomeWork</b></summary><br>
 
 - **Task001**:
 
