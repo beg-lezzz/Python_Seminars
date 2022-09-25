@@ -3,7 +3,7 @@
 <details>
 <summary><b>Seminar001</b></summary>
 
-
+<br>
 <details>
 <summary><b>Tasks:</b></summary>
 
