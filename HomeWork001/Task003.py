@@ -2,7 +2,7 @@
 def input_int(order):
     try:
         num = int(input(f"Введите координату {order}: "))
-        return int(num)
+        return int(num) if int(num) != 0 else quit(print('Ошибка. Координата не может быть = 0'))
     except ValueError:
         quit(print('Ошибка. Вы ввели не целое число.'))
 
@@ -13,10 +13,6 @@ def find_quarter(x, y):
         "2 четверть" if x < 0 & y > 0 else \
         "3 четверть" if x < 0 & y < 0 else \
         "4 четверть" if x > 0 & y < 0 else \
-        "На оси X больше нуля" if x > 0 & y == 0 else \
-        "На оси X меньше нуля" if x < 0 & y == 0 else \
-        "На оси Y больше нуля" if x == 0 & y > 0 else \
-        "На оси Y меньше нуля" if x == 0 & y < 0 else \
         "На пересечении осей"
 
 
