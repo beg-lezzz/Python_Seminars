@@ -2,7 +2,7 @@
 def input_int():
     try:
         num = int(input(f"Введите число: "))
-        return int(num)
+        return int(num) if int(num) > 0 else quit(print('Ошибка. Введите целое число больше нуля.'))
     except ValueError:
         quit(print('Ошибка. Вы ввели не целое число.'))
 
