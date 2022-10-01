@@ -16,7 +16,7 @@ def list_insert(dig_amount):
         counter +=1
     return list
 
-# метод для проверки справедливочти двух утверждений
+# метод для проверки справедливоcти двух утверждений
 def check_condition(list):
     print()
     if not(list[0] or list[1] or list[2]) == (not(list[0]) and not(list[1]) and not(list[2])):

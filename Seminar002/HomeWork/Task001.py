@@ -1,8 +1,7 @@
-import random
 # метод для запроса у пользователя вещественных чисел с проверкой
 def input_int():
     try:
-        num = float(input(f"Введите вещественное число: "))
+        num = float(input("Введите вещественное число: "))
         return str(num).replace('.', '')
     except ValueError:
         quit(print('Ошибка. Вы ввели не вещественное число.'))
@@ -10,7 +9,7 @@ def input_int():
 
 # метод для суммирования цифр в вещественном числе, введенном пользователем
 def sum_digits_string(in_string):
-    b = []
+    set_numbers = []
     sum_digits = 0
     minus_num = 0
 
@@ -23,7 +22,7 @@ def sum_digits_string(in_string):
     # суммируем все числа в исходной строке
     for i in in_string:
         sum_digits += int(i)
-        b.append(i)
+        set_numbers.append(i)
 
     # выводим полученную сумму с поправкой на
     return sum_digits + minus_num
