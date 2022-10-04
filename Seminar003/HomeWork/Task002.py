@@ -23,4 +23,4 @@ def odd_index_product(input_list):
         return 'В списке содержатся не только числа, либо список пуст'
 
 
-print(odd_index_product(input_list()))
+print(odd_index_sum(input_list()))
