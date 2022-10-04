@@ -5,17 +5,20 @@ def input_list():
 
 #метод для проверки списка на то, что в нм содержатся только числа
 def check_list(input_list):
+    flag = 0
     for i in input_list:
         try:
             float(i.replace(',', '.'))
-            return True
         except ValueError:
-            return False
+            flag += 1
+    return flag == 0
 
 
 #метод для формирования списка элементов - дробных частей введенных вещественных чисел
 def fractional_part_list(input_list):
     fractional_list = []
+    print(input_list)
+    print(check_list(input_list))
     if check_list(input_list):
         for i in input_list:
             if float(i.replace(',', '.')) - int(float(i.replace(',', '.'))) > 0:
