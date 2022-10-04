@@ -10,7 +10,7 @@ def check_list(input_list):
             return True
 
 
-def odd_index_sum(input_list):
+def odd_index_product(input_list):
     if check_list(input_list):
         if len(input_list) > 2:
             product_nums = 1
