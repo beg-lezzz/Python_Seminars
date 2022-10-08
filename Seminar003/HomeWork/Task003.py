@@ -33,7 +33,7 @@ def diff_list_my(input_list):
         for i in input_list:
             if i < min_num:
                 min_num = i
-            else:
+            elif i > max_num:
                 max_num = i
         return round(max_num - min_num, 2)
     else:
