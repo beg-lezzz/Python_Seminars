@@ -15,10 +15,10 @@ def check_list(input_list):
 def odd_index_product(input_list):
     if check_list(input_list):
         if len(input_list) > 2:
-            product_nums = 1
+            product_nums = 0
             for i in range(1, len(input_list), 2):
-                product_nums *= int(input_list[i])
-            return 'Произведение элементов на нечетных позициях = ' + str(product_nums)
+                product_nums += int(input_list[i])
+            return 'Сумма элементов на нечетных позициях = ' + str(product_nums)
         else:
             return 'Нет элементов на нечетных позициях'
     else:
