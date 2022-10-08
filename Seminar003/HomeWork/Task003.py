@@ -28,21 +28,21 @@ def fractional_part_list(input_list):
 #метод для нахождения разницы между максимальным и минимальным значением в списке (свой)
 def diff_list_my(input_list):
     if len(input_list) > 0:
-        min_num = float(input_list[0])
-        max_num = float(input_list[0])
+        min_num = input_list[0]
+        max_num = input_list[0]
         for i in input_list:
-            if float(i) < min_num:
-                min_num = float(i)
+            if i < min_num:
+                min_num = i
             else:
-                max_num = float(i)
-        return max_num - min_num
+                max_num = i
+        return round(max_num - min_num, 2)
     else:
         return '0. Список пуст.'
 
 
 #метод для нахождения разницы между максимальным и минимальным значением в списке (встроенный)
 def diff_list(input_list):
-    return max(input_list) - min(input_list) if len(input_list) > 0 else '0. Список пуст.'
+    return round(max(input_list) - min(input_list), 2) if len(input_list) > 0 else '0. Список пуст.'
 
 
 frac_list = fractional_part_list(input_list())
