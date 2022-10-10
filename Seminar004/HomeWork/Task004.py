@@ -20,7 +20,7 @@ def input_int():
 
 # метод возвращает случайное число от 0 до 100
 def fill_list_rnd():
-    return random.randint(0, 3)
+    return random.randint(0, 100)
 
 
 # метод для составления многочлена с количеством слагаемых = введенному пользователем
@@ -38,4 +38,11 @@ def fill_polynomial(input_num):
     return " + ".join(sum_list) + ' = 0'
 
 
-print(fill_polynomial(input_int()))
+def write_to_file(input_string):
+    with open('polynom_HW004.txt', 'w') as file_with_poly:
+        file_with_poly.write(input_string)
+
+
+poly = fill_polynomial(input_int())
+print(poly)
+write_to_file(poly)
