@@ -2,11 +2,16 @@ b = '1x^5 + 2x^4 + 2x^3 + 1x^2 + 3x + 1 = 0'
 a = '2x^4 + 2x^3 + 9x^2 + 2x = 0'
 
 
-# метод для чтения строк из файла и заполнения списка
+# метод для чтения строк из двух файлов и заполнения общего списка многочленов
 def read_from_file():
     with open("polynominal.txt", "r") as file_with_poly:
         poly_list = file_with_poly.read().splitlines()
     file_with_poly.close()
+    with open("polynominal_1.txt", "r") as file_with_poly:
+        poly_list_1 = file_with_poly.read().splitlines()
+    file_with_poly.close()
+
+    poly_list = poly_list + poly_list_1
 
     return poly_list
 
