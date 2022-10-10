@@ -38,7 +38,7 @@ def fill_polynomial(input_num):
     return " + ".join(sum_list) + ' = 0'
 
 
-# метод для
+# метод для добавления вновь созданного многочлена в файл
 def write_to_file(input_string):
     with open('polynom_HW004.txt', 'a') as file_with_poly:
         file_with_poly.write(input_string + '\n')
