@@ -1,6 +1,7 @@
 import random
 
 
+# метод для запроса входных данных у пользователя
 def options_for_game():
     print('\n' + '*' * 15 + ' Основные настройки игры ' + '*' * 15 + '\n')
     type_of_game = int(input('Введите тип игры (1 - два игрока, 2 - игра против "глупого" бота, 3 - игра против "умного" бота) : '))
@@ -20,6 +21,7 @@ def options_for_game():
     return count_of_candies, step_of_catch, player_1, player_2, current_player, type_of_game
 
 
+# метод для проведения игры между двумя пользователями
 def two_players_game(count_of_candies, step_of_catch, player_1, player_2, current_player):
     while count_of_candies > 0:
         print('\n' + "\033[33m{}".format('Количесто конфет на столе => {} <='.format(count_of_candies)) + "\033[0m{}".format(''))
@@ -38,6 +40,10 @@ def two_players_game(count_of_candies, step_of_catch, player_1, player_2, curren
     return '\n' + "\033[32m{}".format('Победил "{}"'.format(current_player)) + "\033[0m{}".format('')
 
 
+# метод для проведения игры между пользователем и ботом. При этом есть два режима - умный и глупый бот.
+# глупый бот берет рандомное количество конфет в пределах максимума
+# умный бот играет по выигрышной стратегии => берет количество конфет равное остатку
+# от деления количества конфет на максимальный шаг плюс один
 def one_player_game(count_of_candies, step_of_catch, player_1, player_2, current_player, type_of_game):
     while count_of_candies > 0:
         print('\n' + "\033[33m{}".format('Количесто конфет на столе => {} <='.format(count_of_candies)) + "\033[0m{}".format(''))
@@ -67,6 +73,7 @@ def one_player_game(count_of_candies, step_of_catch, player_1, player_2, current
     return '\n' + "\033[32m{}".format('Победил "{}"'.format(current_player)) + "\033[0m{}".format('')
 
 
+# метод для запуска необходимой игры в зависимости от выбора пользователя
 def start_game(input_list):
     if input_list[5] == 1:
         return two_players_game(input_list[0], input_list[1], input_list[2], input_list[3], input_list[4])
