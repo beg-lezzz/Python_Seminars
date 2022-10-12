@@ -2,8 +2,8 @@ import random
 
 
 def options_for_game():
-    print('*' * 15 + ' Основные настройки игры ' + '*' * 15 + '\n')
-    type_of_game = int(input('Введите тип игры (1 - два игрока, 2 - игра против "глупого" бота, 2 - игра против "умного" бота) : '))
+    print('\n' + '*' * 15 + ' Основные настройки игры ' + '*' * 15 + '\n')
+    type_of_game = int(input('Введите тип игры (1 - два игрока, 2 - игра против "глупого" бота, 3 - игра против "умного" бота) : '))
     bot_name = 'Stupid_Bot' if type_of_game == 2 else 'Clever_Bot' if type_of_game == 3 else None
     count_of_candies = int(input('Введите количество конфет для игры: '))
     step_of_catch = int(input('Введите количество конфет, которое можно брать за 1 ход - от 1 до: '))
