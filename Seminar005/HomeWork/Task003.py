@@ -1,6 +1,7 @@
 import random
 
 
+# метод для запроса входных данных у пользователя
 def options_for_game():
     print('\n' + '*' * 15 + ' Основные настройки игры ' + '*' * 15 + '\n')
     player_1, player_2 = input('Введите имя Игрока 1: '), input('Введите имя Игрока 2: ')
@@ -11,6 +12,7 @@ def options_for_game():
     return list(range(1, 10)), x_player, o_player
 
 
+# метод для печати игрового поля
 def print_game_field(game_field):
     print('\t')
     for i in range(3):
@@ -18,6 +20,7 @@ def print_game_field(game_field):
         print("-" * 17) if i < 2 else print('\t')
 
 
+# метод для обработки хода пользователя
 def player_turns(player_sign, game_field, x_player, o_player):
     flag = True
     current_player = x_player if player_sign == 'X' else o_player
@@ -38,6 +41,8 @@ def player_turns(player_sign, game_field, x_player, o_player):
             print("Ошибка. Введите число от 1 до 9")
 
 
+
+# метод для проверки на победную комбинацию
 def check_win(game_field):
     win_combinations = ((0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6))
     for combination in win_combinations:
@@ -46,6 +51,7 @@ def check_win(game_field):
     return False
 
 
+# основной метод для обращения к остальным методам и вывода информации пользователю
 def main(input_data):
     counter = 0
     while True:
