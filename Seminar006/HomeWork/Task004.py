@@ -11,4 +11,4 @@ left_list = [element for element in input_list if input_list.index(element) + 1 
 right_list = [element for element in input_list if input_list.index(element) + 1 >= len_list]
 right_list.reverse()
 
-print(*[x * y for x, y in zip(left_list, right_list)], sep=', ')
+print(*[a * b for a, b in zip(left_list, right_list)], sep=', ')
