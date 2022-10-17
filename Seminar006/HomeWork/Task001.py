@@ -12,4 +12,4 @@ def input_int():
 
 
 num = input_int()
-print(*[x for x in range(-num, num + 1)], sep=', ')
+print(*[element for element in range(-num, num + 1)], sep=', ')
