@@ -1,7 +1,7 @@
 # Напишите программу, которая найдёт произведение пар чисел списка.
 # Парой считаем первый и последний элемент, второй и предпоследний и т.д.
 
-input_list = [int(x) for x in input("Введите элементы списка через пробелы: ").split(' ') if x.isnumeric()]
+input_list = [int(element) for element in input("Введите элементы списка через пробелы: ").split(' ') if element.isnumeric()]
 
 len_list = len(input_list) // 2 if len(input_list) % 2 == 0 else len(input_list) // 2 + 1
 
