@@ -1,5 +1,6 @@
 import model
 import view
+import logger
 
 
 def button_click():
@@ -12,4 +13,6 @@ def button_click():
             model.mult_num(value_a, value_b) if operation == '*' else \
                 model.div_num(value_a, value_b) if operation == '/' else \
                     print('Некорректный ввод. Введите одну из операций => "+, -, *, /"')
-    view.view_data(f'{value_a} {operation} {value_b}', result)
+    math_expression = f'{value_a} {operation} {value_b}'
+    view.view_data(math_expression, result)
+    logger.calc_logger(math_expression, result)
