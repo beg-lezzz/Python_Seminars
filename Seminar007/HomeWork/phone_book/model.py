@@ -3,22 +3,24 @@ import time
 
 
 def del_record(choice):
-    print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.')
-    time.sleep(1)
-    z = find_records(choice)
-    # find_res = list(z[1].keys())
-    del_positions = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
-    for_del = list(map(lambda x: str(int(del_positions[del_positions.index(x)]) - 1), del_positions))
-    with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
-        all_line = phonebook.read().splitlines(True)
-    phonebook.close()
-    for index_del in for_del:
-        for strings in all_line:
-            if index_del == strings[0]:
-                all_line.remove(strings)
-    with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
-        phonebook.writelines(all_line)
-    return '0-2'
+    if choice == '3-0':
+        return '0-2'
+    else:
+        # print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.')
+        # time.sleep(1)
+        find_records(choice)
+        del_positions = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
+        for_del = list(map(lambda x: str(int(del_positions[del_positions.index(x)]) - 1), del_positions))
+        with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
+            all_line = phonebook.read().splitlines(True)
+        phonebook.close()
+        for index_del in for_del:
+            for strings in all_line:
+                if index_del == strings[0]:
+                    all_line.remove(strings)
+        with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
+            phonebook.writelines(all_line)
+        return '0-2'
 
 
 def add_record():

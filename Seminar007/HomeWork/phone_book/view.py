@@ -1,3 +1,4 @@
+import time
 clear_console = lambda: print("\n" * 1)
 
 
@@ -15,7 +16,12 @@ def edit_menu():
 
 def find_menu(choice):
     clear_console()
-    menu_title = 'Меню поиска' if choice == '2-2' else 'Меню поиска для удаления записи'
+    if choice == '2-2':
+        print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.\n')
+        time.sleep(1)
+        menu_title = 'Меню поиска для удаления записи'
+    else:
+        menu_title = 'Меню поиска'
     return '3-' + input(f"{'*' * 15} {menu_title} {'*' * 15}\n0. Вернуться в основное меню\n1. Поиск по ФИО\n2. Поиск по номеру телефона"
                         f"\n\nВведите номер действия: ")
 
