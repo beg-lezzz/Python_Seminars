@@ -132,25 +132,3 @@ def print_phonebook():
         time.sleep(1)
 
     return '0'
-
-
-# print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.')
-# time.sleep(1)
-# z = find_records('3-2')
-# find_res = list(z[1].keys())
-# for_del = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
-# for_del = list(map(lambda x: str(int(for_del[for_del.index(x)]) - 1), for_del))
-# with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
-#     all_line = phonebook.read().splitlines(True)
-# phonebook.close()
-# for index_del in for_del:
-#     for strings in all_line:
-#         print(index_del, strings[0], index_del == strings[0])
-#         if index_del == strings[0]:
-#             all_line.remove(strings)
-# with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
-#     phonebook.writelines(all_line)
-
-
-
-# 1;Иванов;Иван;Иванович;9000000000;коммент
