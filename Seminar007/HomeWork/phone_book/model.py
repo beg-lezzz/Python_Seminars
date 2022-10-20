@@ -2,8 +2,23 @@ from datetime import datetime
 import time
 
 
-def del_record(x, y):
-    return x * y
+def del_record(choice):
+    print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.')
+    time.sleep(1)
+    z = find_records(choice)
+    # find_res = list(z[1].keys())
+    del_positions = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
+    for_del = list(map(lambda x: str(int(del_positions[del_positions.index(x)]) - 1), del_positions))
+    with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
+        all_line = phonebook.read().splitlines(True)
+    phonebook.close()
+    for index_del in for_del:
+        for strings in all_line:
+            if index_del == strings[0]:
+                all_line.remove(strings)
+    with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
+        phonebook.writelines(all_line)
+    return '0-2'
 
 
 def add_record():
@@ -34,23 +49,33 @@ def add_record():
     return ('0-2')
 
 
-def find_fio():
+def find_records(choice):
     with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
         dict_lines = {elem.split(';')[0]: elem.split(';')[1:] for elem in phonebook.read().splitlines()}
     phonebook.close()
-    question = ['Фамилия: ', 'Имя: ', 'Отчество: ']
-    new_string = []
-    for quest in question:
-        input_string = input(quest)
+    if choice == '3-1':
+        question = ['Фамилия: ', 'Имя: ', 'Отчество: ']
+        new_string = []
+        for quest in question:
+            input_string = input(quest)
+            while True:
+                if input_string != '':
+                    new_string.append(input_string)
+                    break
+                else:
+                    print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
+                    input_string = input(quest)
+
+        find_results = dict(filter(lambda item: ' '.join(item[1]).count(' '.join(new_string)) > 0, dict_lines.items()))
+    else:
+        input_string = input('Введите телефон в формате 9ХХХХХХХХХ: ')
         while True:
             if input_string != '':
-                new_string.append(input_string)
+                find_results = dict(filter(lambda item: ' '.join(item[1]).count(input_string) > 0, dict_lines.items()))
                 break
             else:
                 print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
-                input_string = input(quest)
-
-    find_results = dict(filter(lambda item: ' '.join(item[1]).count(' '.join(new_string)) > 0, dict_lines.items()))
+                input_string = input('Введите телефон в формате 9ХХХХХХХХХ: ')
     if find_results != {}:
         print(f'\n\033[32mНайдено записей => {len(find_results)}.\033[0m')
         print('\n\033[32mНачало вывода результатов поиска.\033[0m')
@@ -61,11 +86,7 @@ def find_fio():
     else:
         print('\n\033[32mПо заданным параметрам ничего не найдено.\033[0m')
 
-    return '0-3'
-
-
-def find_number(x, y):
-    return x / y
+    return ('0-3', find_results)
 
 
 def import_phonebook(choice):
@@ -108,35 +129,23 @@ def print_phonebook():
     return '0'
 
 
-# with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
-#     # dict_lines = {elem.split(';')[0]: ' '.join(elem.split(';')[1:]) for elem in phonebook.read().splitlines()}
-#     dict_lines = {elem.split(';')[0]: elem.split(';')[1:] for elem in phonebook.read().splitlines()}
-#     print(dict_lines)
-#     question = ['Фамилия: ', 'Имя: ', 'Отчество: ']
-#     new_string = []
-#     for quest in question:
-#         input_string = input(quest)
-#         while True:
-#             if input_string != '':
-#                 new_string.append(input_string)
-#                 break
-#             else:
-#                 print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
-#                 input_string = input(quest)
-#
-#     find_results = dict(filter(lambda item: ' '.join(item[1]).count(' '.join(new_string)) > 0, dict_lines.items()))
-#     print_list = []
-#     for k in find_results:
-#         print('\n' + '*' * 15 + ' Запись №' + str(int(k) + 1) + ' ' + '*' * 15)
-#         print(*find_results[k], sep=' ')
-#         a = list(find_results[k])
-#         a.insert(0, k)
-#         print_list.append(a)
-#     print('\n\033[32mНачало вывода результатов поиска.\033[0m')
-#     for record in print_list:
-#         print('\n' + '*' * 15 + ' Запись №' + str(int(record[0]) + 1) + ' ' + '*' * 15)
-#         print(*list(record)[1:], sep=' ')
-#     print('\n\033[32mВывод результатов поиска завершен.\033[0m')
-#
-#     print(print_list)
-#     # print(list(find_results[0:]))
+# print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.')
+# time.sleep(1)
+# z = find_records('3-2')
+# find_res = list(z[1].keys())
+# for_del = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
+# for_del = list(map(lambda x: str(int(for_del[for_del.index(x)]) - 1), for_del))
+# with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
+#     all_line = phonebook.read().splitlines(True)
+# phonebook.close()
+# for index_del in for_del:
+#     for strings in all_line:
+#         print(index_del, strings[0], index_del == strings[0])
+#         if index_del == strings[0]:
+#             all_line.remove(strings)
+# with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
+#     phonebook.writelines(all_line)
+
+
+
+# 1;Иванов;Иван;Иванович;9000000000;коммент
