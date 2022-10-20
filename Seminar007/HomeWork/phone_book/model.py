@@ -6,8 +6,6 @@ def del_record(choice):
     if choice == '3-0':
         return '0-2'
     else:
-        # print('Для удаления записи нужно её найти и выбрать. Вы будете перенаправлены к поиску.')
-        # time.sleep(1)
         find_records(choice)
         del_positions = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
         for_del = list(map(lambda x: str(int(del_positions[del_positions.index(x)]) - 1), del_positions))
@@ -18,8 +16,13 @@ def del_record(choice):
             for strings in all_line:
                 if index_del == strings[0]:
                     all_line.remove(strings)
+        for strings in all_line:
+            all_line[all_line.index(strings)] = str(all_line.index(strings)) + strings[1:]
         with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
             phonebook.writelines(all_line)
+
+        print("\n\033[32mЗапись успешно удалена.\033[0m")
+        time.sleep(1)
         return '0-2'
 
 
@@ -72,11 +75,11 @@ def find_records(choice):
     else:
         input_string = input('Введите телефон в формате 9ХХХХХХХХХ: ')
         while True:
-            if input_string != '':
+            if input_string != '' and len(input_string) == 10:
                 find_results = dict(filter(lambda item: ' '.join(item[1]).count(input_string) > 0, dict_lines.items()))
                 break
             else:
-                print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
+                print('\033[31mОшибка. Повторите ввод.\033[0m')
                 input_string = input('Введите телефон в формате 9ХХХХХХХХХ: ')
     if find_results != {}:
         print(f'\n\033[32mНайдено записей => {len(find_results)}.\033[0m')
