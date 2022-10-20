@@ -1,14 +1,26 @@
-def view_data(title, data):
-    print(f'{title} = {data}')
+clear_console = lambda: print("\n" * 1)
 
 
-def get_value(nums_type):
-    return int(input('value = ')) if nums_type == 1 else complex(input('value = '))
+def main_menu():
+    clear_console()
+    return '0-' + input(f"{'*' * 15} Основное меню {'*' * 15}\n0. Выход\n1. Вывести весь справочник\n2. Редактирование"
+                        f"\n3. Поиск\n4. Импорт\n\nВведите номер действия: ")
 
 
-def get_operation():
-    return input('operation = ')
+def edit_menu():
+    clear_console()
+    return '2-' + input(f"{'*' * 15} Основное меню {'*' * 15}\n0. Вернуться в основное меню\n1. Добавить запись\n2. Удалить запись"
+        f"\n\nВведите номер действия: ")
 
 
-def get_type():
-    return int(input('Введите тип чисел для работы (1 - целые, 2 - комплексные) = '))
+def find_menu():
+    clear_console()
+    return '3-' + input(f"{'*' * 15} Меню поиска {'*' * 15}\n0. Вернуться в основное меню\n1. Поиск по ФИО\n2. Поиск по номеру телефона"
+                        f"\n\nВведите номер действия: ")
+
+
+def import_menu():
+    clear_console()
+    return '4-' + input(
+        f"{'*' * 15} Основное меню {'*' * 15}\n0. Вернуться в основное меню\n1. Импорт в .txt\n2. Импорт в .csv"
+        f"\n\nВвведите номер действия: ")

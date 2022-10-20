@@ -1,18 +1,18 @@
 import model
 import view
-import logger
 
 
-def button_click():
-    nums_type = view.get_type()
-    value_a = view.get_value(nums_type)
-    value_b = view.get_value(nums_type)
-    operation = view.get_operation()
-    result = model.sum_num(value_a, value_b) if operation == '+' else \
-        model.sub_num(value_a, value_b) if operation == '-' else \
-            model.mult_num(value_a, value_b) if operation == '*' else \
-                model.div_num(value_a, value_b) if operation == '/' else \
-                    print('Некорректный ввод. Введите одну из операций => "+, -, *, /"')
-    math_expression = f'{value_a} {operation} {value_b}'
-    view.view_data(math_expression, result)
-    logger.calc_logger(math_expression, result)
+def check_choice(choice):
+    check_choice(model.print_phonebook()) if choice == '0-1' else \
+    check_choice(view.edit_menu()) if choice == '0-2' else \
+    check_choice(model.add_record()) if choice == '2-1' else \
+    check_choice(view.find_menu()) if choice == '0-3' else \
+    check_choice(view.import_menu()) if choice == '0-4' else \
+    check_choice(model.find_fio()) if choice == '3-1' else \
+    check_choice(model.import_phonebook(choice)) if choice in ('4-2', '4-1') else \
+    check_choice(view.main_menu()) if choice in ('2-0', '3-0', '4-0', '0') else \
+    quit("\033[32mСпасибо, что воспользовались нашим справочником. Ждём Вас снова.\033[0m") if choice == '0-0' else \
+    print('Error')
+
+
+check_choice(view.main_menu())
