@@ -94,24 +94,24 @@ def find_records(choice):
     return ('0-3', find_results)
 
 
-def import_phonebook(choice):
+def export_phonebook(choice):
     with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
         all_line = phonebook.read().splitlines(True)
     phonebook.close()
     if choice == '4-2':
-        with open(f"export/csv/import_phonebook_{datetime.now().strftime('%d%m%y%H%M%S')}.csv",
+        with open(f"export/csv/export_phonebook_{datetime.now().strftime('%d%m%y%H%M%S')}.csv",
                   'w+', encoding='cp1251') as phonebook:
             phonebook.writelines(all_line)
         file_format = 'csv'
     elif choice == '4-1':
-        with open(f"export/txt/import_phonebook_{datetime.now().strftime('%d%m%y%H%M%S')}.txt",
+        with open(f"export/txt/export_phonebook_{datetime.now().strftime('%d%m%y%H%M%S')}.txt",
                   'a+', encoding='utf-8') as phonebook:
             for lines in all_line:
                 for fields in lines.split(';'):
                     phonebook.writelines(fields + '\n')
             phonebook.writelines('\n\n')
         file_format = 'txt'
-    print(f'\n\033[32mСправочник успешно импортирован в формат .{file_format}.\033[0m')
+    print(f'\n\033[32mСправочник успешно экспортирован в формат .{file_format}.\033[0m')
     time.sleep(1)
 
     return '0-4'
@@ -132,3 +132,59 @@ def print_phonebook():
         time.sleep(1)
 
     return '0'
+
+
+def import_phonebook(choice):
+    if choice == '5-2':
+        with open('import/csv/import_phonebook.csv', 'r', encoding='cp1251') as phonebook:
+            all_line = phonebook.read().splitlines()
+        with open('phonebook.txt', 'a+', encoding='utf-8') as phonebook:
+            for x in all_line:
+                phonebook.write("\n" + x)
+            phonebook.close()
+        with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
+            all_line = phonebook.read().splitlines(False)
+            for i in range(len(all_line)):
+                all_line[i] = str(i) + all_line[i][1:]
+            phonebook.close()
+        with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
+            for x in all_line:
+                if all_line.index(x) == 0:
+                    delimetr = ''
+                else:
+                    delimetr = '\n'
+                phonebook.write(delimetr + x)
+        file_format = 'csv'
+    elif choice == '5-1':
+        with open('import/txt/import_phonebook.txt', 'r', encoding='utf-8') as phonebook:
+            all_line = phonebook.read().splitlines()
+            new_line = []
+            string_new = ''
+            for x in all_line:
+                if x != '':
+                    string_new += x + ';'
+                else:
+                    new_line.append(string_new[:-1])
+                    string_new = ''
+            phonebook.close()
+        with open('phonebook.txt', 'a+', encoding='utf-8') as phonebook:
+            for x in new_line:
+                phonebook.write("\n" + x)
+            phonebook.close()
+        with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
+            all_line = phonebook.read().splitlines(False)
+            for i in range(len(all_line)):
+                all_line[i] = str(i) + all_line[i][1:]
+            phonebook.close()
+        with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
+            for x in all_line:
+                if all_line.index(x) == 0:
+                    delimetr = ''
+                else:
+                    delimetr = '\n'
+                phonebook.write(delimetr + x)
+        file_format = 'txt'
+    print(f'\n\033[32mСправочник успешно импортирован из формата .{file_format}.\033[0m')
+    time.sleep(1)
+
+    return '0-5'
