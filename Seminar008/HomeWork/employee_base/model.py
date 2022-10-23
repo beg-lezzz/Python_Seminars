@@ -30,6 +30,7 @@ def del_record(choice):
         return '0-2'
 
 
+#ГОТОВО
 def add_record():
     question = ['Фамилия: ', 'Имя: ', 'Отчество: ', 'Должность: ', 'Заработная плата, руб.: ', 'Премия, руб.:']
     new_string = []
@@ -119,17 +120,22 @@ def export_phonebook(choice):
 
     return '0-4'
 
+
 # ГОТОВО
 def print_phonebook():
-    # db = settings.connect_db()[0]
+    db = settings.connect_db()[0]
     cursor = settings.connect_db()[1]
     cursor.execute('SELECT * FROM employers')
     all_line = list(cursor.fetchall())
 
     if not all_line == []:
         print('\n\033[32mНачало вывода справочника.\033[0m')
+        test = {}
         for record in all_line:
-            print(*record)
+            test[list(record)[0]] = list(record)[1:]
+        for key, val in test.items():
+            print('\n' + '*' * 15 + ' Запись №' + str(key) + ' ' + '*' * 15)
+            print(*val)
         print('\n\033[32mВывод справочника завершен.\033[0m')
     else:
         print('\n\033[32mСправочник пока пуст. Вы можете добавить в него первую запись.\033[0m')
