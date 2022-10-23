@@ -1,33 +1,58 @@
 from datetime import datetime
 import time
-import sqlite3
 import settings
 
-db = sqlite3.connect('employee_base.db')
+db = settings.connect_db()[0]
 cursor = db.cursor()
 
+
+#ГОТОВО
 def del_record(choice):
     if choice == '3-0':
         return '0-2'
     else:
-        find_records(choice)
-        del_positions = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
-        for_del = list(map(lambda x: str(int(del_positions[del_positions.index(x)]) - 1), del_positions))
-        with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
-            all_line = phonebook.read().splitlines(True)
-        phonebook.close()
-        for index_del in for_del:
-            for strings in all_line:
-                if index_del == strings[0]:
-                    all_line.remove(strings)
-        for strings in all_line:
-            all_line[all_line.index(strings)] = str(all_line.index(strings)) + strings[1:]
-        with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
-            phonebook.writelines(all_line)
-
-        print("\n\033[32mЗапись успешно удалена.\033[0m")
+        find_results = find_records(choice)
+        if find_results[1] != []:
+            del_positions = ', '.join(input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' '))
+            query = f"DELETE FROM employers WHERE id IN ({del_positions})"
+            cursor.execute(query)
+            db.commit()
+            print("\n\033[32mЗапись успешно удалена.\033[0m")
+        else:
+            return '2-2'
         time.sleep(1)
+
+    return '0-2'
+
+
+#ГОТОВО
+def edit_record(choice):
+    if choice == '3-0':
         return '0-2'
+    else:
+        find_results = find_records(choice)
+        if find_results[1] != []:
+            edit_position = input('Введите номер записи для корректировки зарплаты и премии: ')
+            question = ['Заработная плата: ', 'Премия: ']
+            new_string = []
+            for quest in question:
+                input_string = input(quest)
+                while True:
+                    if input_string != '':
+                        new_string.append(input_string)
+                        break
+                    else:
+                        print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
+                        input_string = input(quest)
+            query = f"UPDATE employers SET slary = {new_string[0]}, bonus = {new_string[1]} WHERE id = {int(edit_position)}"
+            cursor.execute(query)
+            db.commit()
+            print("\n\033[32mЗапись успешно обновлена.\033[0m")
+        else:
+            return '2-2'
+        time.sleep(1)
+
+    return '0-2'
 
 
 #ГОТОВО
@@ -58,10 +83,8 @@ def add_record():
     return ('0-2')
 
 
+# ГОТОВО
 def find_records(choice):
-    with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
-        dict_lines = {elem.split(';')[0]: elem.split(';')[1:] for elem in phonebook.read().splitlines()}
-    phonebook.close()
     if choice == '3-1':
         question = ['Фамилия: ', 'Имя: ', 'Отчество: ']
         new_string = []
@@ -75,22 +98,15 @@ def find_records(choice):
                     print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
                     input_string = input(quest)
 
-        find_results = dict(filter(lambda item: ' '.join(item[1]).count(' '.join(new_string)) > 0, dict_lines.items()))
-    else:
-        input_string = input('Введите телефон в формате 9ХХХХХХХХХ: ')
-        while True:
-            if input_string != '' and len(input_string) == 10:
-                find_results = dict(filter(lambda item: ' '.join(item[1]).count(input_string) > 0, dict_lines.items()))
-                break
-            else:
-                print('\033[31mОшибка. Повторите ввод.\033[0m')
-                input_string = input('Введите телефон в формате 9ХХХХХХХХХ: ')
-    if find_results != {}:
+        cursor.execute(f"select * from employers where (surname || ' ' || name || ' ' || patronymic) "
+                       f"like '{' '.join(new_string)}'")
+        find_results = list(cursor.fetchall())
+    if find_results != []:
         print(f'\n\033[32mНайдено записей => {len(find_results)}.\033[0m')
         print('\n\033[32mНачало вывода результатов поиска.\033[0m')
-        for k in find_results:
-            print('\n' + '*' * 15 + ' Запись №' + str(int(k) + 1) + ' ' + '*' * 15)
-            print(*find_results[k], sep=' ')
+        for record in find_results:
+            print('\n' + '*' * 15 + ' Запись №' + str((record[0])) + ' ' + '*' * 15)
+            print(*record[1:], sep=' ')
         print('\n\033[32mВывод результатов поиска завершен.\033[0m')
     else:
         print('\n\033[32mПо заданным параметрам ничего не найдено.\033[0m')
@@ -98,31 +114,40 @@ def find_records(choice):
     return ('0-3', find_results)
 
 
-def export_phonebook(choice):
-    with open('phonebook.txt', 'r', encoding='utf-8') as phonebook:
-        all_line = phonebook.read().splitlines(True)
-    phonebook.close()
+# ГОТОВО
+def export_data_base(choice):
+    cursor.execute('SELECT * FROM employers')
+    all_line = list(cursor.fetchall())
     if choice == '4-2':
-        with open(f"export/csv/export_phonebook_{datetime.now().strftime('%d%m%y%H%M%S')}.csv",
+        with open(f"export/csv/export_data_base_{datetime.now().strftime('%d%m%y%H%M%S')}.csv",
                   'w+', encoding='cp1251') as phonebook:
-            phonebook.writelines(all_line)
+            rec_string = ''
+            for record in all_line:
+                record = [str(i) for i in record]
+                rec_string += ';'.join(record)
+                rec_string += '\n'
+            phonebook.writelines(rec_string)
+            phonebook.close()
         file_format = 'csv'
     elif choice == '4-1':
-        with open(f"export/txt/export_phonebook_{datetime.now().strftime('%d%m%y%H%M%S')}.txt",
+        with open(f"export/txt/export_data_base_{datetime.now().strftime('%d%m%y%H%M%S')}.txt",
                   'a+', encoding='utf-8') as phonebook:
-            for lines in all_line:
-                for fields in lines.split(';'):
-                    phonebook.writelines(fields + '\n')
-            phonebook.writelines('\n\n')
+            rec_string = ''
+            for record in all_line:
+                record = [str(i) for i in record]
+                rec_string += '\n'.join(record)
+                rec_string += '\n\n'
+            phonebook.writelines(rec_string)
+            phonebook.close()
         file_format = 'txt'
-    print(f'\n\033[32mСправочник успешно экспортирован в формат .{file_format}.\033[0m')
+    print(f'\n\033[32mБаза успешно экспортирована в формат .{file_format}.\033[0m')
     time.sleep(1)
 
     return '0-4'
 
 
 # ГОТОВО
-def print_phonebook():
+def print_data_base():
     db = settings.connect_db()[0]
     cursor = settings.connect_db()[1]
     cursor.execute('SELECT * FROM employers')
@@ -144,56 +169,31 @@ def print_phonebook():
     return '0'
 
 
-def import_phonebook(choice):
+# ГОТОВО
+def import_data_base(choice):
     if choice == '5-2':
-        with open('import/csv/import_phonebook.csv', 'r', encoding='cp1251') as phonebook:
+        with open('import/csv/import_data_base.csv', 'r', encoding='cp1251') as phonebook:
             all_line = phonebook.read().splitlines()
-        with open('phonebook.txt', 'a+', encoding='utf-8') as phonebook:
-            for x in all_line:
-                phonebook.write("\n" + x)
-            phonebook.close()
-        with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
-            all_line = phonebook.read().splitlines(False)
-            for i in range(len(all_line)):
-                all_line[i] = str(i) + all_line[i][1:]
-            phonebook.close()
-        with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
-            for x in all_line:
-                if all_line.index(x) == 0:
-                    delimetr = ''
-                else:
-                    delimetr = '\n'
-                phonebook.write(delimetr + x)
+            all_line = ([list(i.split(';'))[1:] for i in all_line])
+        cursor.executemany('INSERT INTO employers(surname,name,patronymic,position,slary,bonus) VALUES(?,?,?,?,?,?)',
+                           all_line)
+        db.commit()
         file_format = 'csv'
     elif choice == '5-1':
-        with open('import/txt/import_phonebook.txt', 'r', encoding='utf-8') as phonebook:
-            all_line = phonebook.read().splitlines()
-            new_line = []
-            string_new = ''
-            for x in all_line:
-                if x != '':
-                    string_new += x + ';'
+        with open('import/txt/import_data_base.txt', 'r', encoding='utf-8') as phonebook:
+            all_line = (phonebook.read().splitlines())
+            query_line = []
+            rec_string = ''
+            for i in all_line:
+                if i != '':
+                    rec_string += i + ','
                 else:
-                    new_line.append(string_new[:-1])
-                    string_new = ''
-            phonebook.close()
-        with open('phonebook.txt', 'a+', encoding='utf-8') as phonebook:
-            for x in new_line:
-                phonebook.write("\n" + x)
-            phonebook.close()
-        with open('phonebook.txt', 'r+', encoding='utf-8') as phonebook:
-            all_line = phonebook.read().splitlines(False)
-            for i in range(len(all_line)):
-                all_line[i] = str(i) + all_line[i][1:]
-            phonebook.close()
-        with open('phonebook.txt', 'w', encoding='utf-8') as phonebook:
-            for x in all_line:
-                if all_line.index(x) == 0:
-                    delimetr = ''
-                else:
-                    delimetr = '\n'
-                phonebook.write(delimetr + x)
-        file_format = 'txt'
+                    query_line.append(list((rec_string[0:-1]).split(',')[1:]))
+                    rec_string = ''
+        cursor.executemany('INSERT INTO employers(surname,name,patronymic,position,slary,bonus) VALUES(?,?,?,?,?,?)',
+                           query_line)
+        db.commit()
+        file_format = 'csv'
     print(f'\n\033[32mСправочник успешно импортирован из формата .{file_format}.\033[0m')
     time.sleep(1)
 
