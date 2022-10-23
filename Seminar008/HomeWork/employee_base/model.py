@@ -154,16 +154,16 @@ def print_data_base():
     all_line = list(cursor.fetchall())
 
     if not all_line == []:
-        print('\n\033[32mНачало вывода справочника.\033[0m')
+        print('\n\033[32mНачало вывода базы.\033[0m')
         test = {}
         for record in all_line:
             test[list(record)[0]] = list(record)[1:]
         for key, val in test.items():
             print('\n' + '*' * 15 + ' Запись №' + str(key) + ' ' + '*' * 15)
             print(*val)
-        print('\n\033[32mВывод справочника завершен.\033[0m')
+        print('\n\033[32mВывод базы завершен.\033[0m')
     else:
-        print('\n\033[32mСправочник пока пуст. Вы можете добавить в него первую запись.\033[0m')
+        print('\n\033[32mБаза пока пуста. Вы можете добавить в нее первую запись.\033[0m')
         time.sleep(1)
 
     return '0'
