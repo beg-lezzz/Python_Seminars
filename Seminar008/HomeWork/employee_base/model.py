@@ -6,48 +6,70 @@ db = settings.connect_db()[0]
 cursor = db.cursor()
 
 
-#ГОТОВО
 def del_record(choice):
     if choice == '3-0':
         return '0-2'
     else:
         find_results = find_records(choice)
-        if find_results[1] != []:
-            del_positions = ', '.join(input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' '))
-            query = f"DELETE FROM employers WHERE id IN ({del_positions})"
-            cursor.execute(query)
-            db.commit()
-            print("\n\033[32mЗапись успешно удалена.\033[0m")
-        else:
-            return '2-2'
+        find_positions = []
+        if find_results[1] != ['']:
+            for i in find_results[1]:
+                find_positions.append(i[0])
+            while True:
+                del_positions = input('Введите номер(а) записи(ей) для удаления через пробел: ').split(' ')
+                if del_positions == ['']:
+                    print("\n\033[32mВы не ввели номера записей.\033[0m")
+                else:
+                    del_positions_string = ', '.join(del_positions)
+                    del_positions = [int(i) for i in del_positions]
+                    if set(del_positions).issubset(find_positions) and del_positions != ['']:
+                        query = f"DELETE FROM employers WHERE id IN ({del_positions_string})"
+                        cursor.execute(query)
+                        db.commit()
+                        print("\n\033[32mЗапись успешно удалена.\033[0m")
+                        break
+                    else:
+                        print("\n\033[32mВы ввели номера записей не из результатов поиска.\033[0m")
+                        continue
         time.sleep(1)
 
     return '0-2'
 
 
-#ГОТОВО
 def edit_record(choice):
     if choice == '3-0':
         return '0-2'
     else:
         find_results = find_records(choice)
-        if find_results[1] != []:
-            edit_position = input('Введите номер записи для корректировки зарплаты и премии: ')
-            question = ['Заработная плата: ', 'Премия: ']
-            new_string = []
-            for quest in question:
-                input_string = input(quest)
-                while True:
-                    if input_string != '':
-                        new_string.append(input_string)
+        find_positions = []
+        if find_results[1] != ['']:
+            for i in find_results[1]:
+                find_positions.append(i[0])
+            while True:
+                edit_position = input('Введите номер записи для корректировки зарплаты и премии: ')
+                if edit_position == '':
+                    print("\n\033[32mВы не ввели номера записей.\033[0m")
+                else:
+                    edit_list = [int(i) for i in edit_position]
+                    if set(edit_list).issubset(find_positions) and edit_list != ['']:
+                        question = ['Заработная плата: ', 'Премия: ']
+                        new_string = []
+                        for quest in question:
+                            input_string = input(quest)
+                            while True:
+                                if input_string != '':
+                                    new_string.append(input_string)
+                                    break
+                                else:
+                                    print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
+                                    input_string = input(quest)
+                        query = f"UPDATE employers SET slary = {new_string[0]}, bonus = {new_string[1]} WHERE id = {int(edit_position)}"
+                        cursor.execute(query)
+                        db.commit()
+                        print("\n\033[32mЗапись успешно обновлена.\033[0m")
                         break
                     else:
-                        print('\033[31mСтрока не должна быть пустой. Повторите ввод.\033[0m')
-                        input_string = input(quest)
-            query = f"UPDATE employers SET slary = {new_string[0]}, bonus = {new_string[1]} WHERE id = {int(edit_position)}"
-            cursor.execute(query)
-            db.commit()
-            print("\n\033[32mЗапись успешно обновлена.\033[0m")
+                        print("\n\033[32mВы ввели номера записей не из результатов поиска.\033[0m")
         else:
             return '2-2'
         time.sleep(1)
@@ -55,7 +77,6 @@ def edit_record(choice):
     return '0-2'
 
 
-#ГОТОВО
 def add_record():
     question = ['Фамилия: ', 'Имя: ', 'Отчество: ', 'Должность: ', 'Заработная плата, руб.: ', 'Премия, руб.:']
     new_string = []
@@ -83,7 +104,6 @@ def add_record():
     return ('0-2')
 
 
-# ГОТОВО
 def find_records(choice):
     if choice == '3-1':
         question = ['Фамилия: ', 'Имя: ', 'Отчество: ']
@@ -114,7 +134,6 @@ def find_records(choice):
     return ('0-3', find_results)
 
 
-# ГОТОВО
 def export_data_base(choice):
     cursor.execute('SELECT * FROM employers')
     all_line = list(cursor.fetchall())
@@ -146,7 +165,6 @@ def export_data_base(choice):
     return '0-4'
 
 
-# ГОТОВО
 def print_data_base():
     db = settings.connect_db()[0]
     cursor = settings.connect_db()[1]
@@ -169,7 +187,6 @@ def print_data_base():
     return '0'
 
 
-# ГОТОВО
 def import_data_base(choice):
     if choice == '5-2':
         with open('import/csv/import_data_base.csv', 'r', encoding='cp1251') as phonebook:
