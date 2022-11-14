@@ -52,7 +52,6 @@ def seq(n):
     for i in range(n):
         res = (1 + i) ** i
         result.append(res)
-    print('not cache')
 
     return result
 
