@@ -1,7 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ContextTypes
 from telegram import Update
 import logging
-TOKEN = '5640178135:AAHr3PBZzgGDAIpAQ1o49ay9pHF7cP-X1z8'
+TOKEN = '123'
 # получаем экземпляр `Updater`
 updater = Updater(token=TOKEN, use_context=True)
 # получаем экземпляр `Dispatcher`
