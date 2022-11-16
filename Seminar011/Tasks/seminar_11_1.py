@@ -17,8 +17,8 @@
 from sympy import *
 import matplotlib.pyplot as plt
 
-print("2. Определить корни")
-x = Symbol('x')
+print("1. Определить корни")
+x = Symbol("x")
 func = 5*x**2+10*x-30
 y = solve(func)
 # print(y)
