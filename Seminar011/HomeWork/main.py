@@ -15,8 +15,7 @@ def print_func():
 
 
 def f(x):
-    return -12 * x ** 4 * numpy.sin(
-        numpy.cos(x)) - 18 * x ** 3 + 5 * x ** 2 + 10 * x - 30
+    return -12 * x ** 4 * numpy.sin(numpy.cos(x)) - 18 * x ** 3 + 5 * x ** 2 + 10 * x - 30
 
 
 def func_roots():
